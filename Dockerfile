@@ -10,9 +10,11 @@ WORKDIR /var/www/html
 # Pasang modul-modul PHP yang diperlukan
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Atur permission agar Apache dapat menulis ke direktori storage jika diperlukan
+# Create the storage directory if it doesn't exist
+RUN mkdir -p /var/www/html/storage
+
+# Set ownership of the directory (and its contents) to www-data
 RUN chown -R www-data:www-data /var/www/html/storage
-RUN chmod -R 775 /var/www/html/storage
 
 # Expose port 80 untuk Apache
 EXPOSE 80
